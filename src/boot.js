@@ -61,7 +61,7 @@ window.__ModuleLoader__.load({
       document.head.appendChild(style);
       // Snapshot only the healthy native loading page. Keep the real page untouched;
       // the detached copy is displayed only once the application actually mounts.
-      let handoffHTML = "", nativeCanvas = "#08090c";
+      let handoffHTML = "", nativeCanvas = "";
       const nativeLoading = document.querySelector("[data-dsh-boot]");
       if (nativeLoading && nativeLoading.querySelector("[data-dsh-boot-spinner]")) {
         const bounds = nativeLoading.getBoundingClientRect();
@@ -110,7 +110,7 @@ window.__ModuleLoader__.load({
         if (cleaned || retired) return;
         if (root === node) return;
         root = node;
-        root.style.setProperty("--bb-native-canvas", nativeCanvas);
+        if (nativeCanvas) root.style.setProperty("--bb-native-canvas", nativeCanvas);
         if (started) { retired = true; root.style.display = "none"; return; }
         started = true;
         previousFocus = document.activeElement;

@@ -1,6 +1,6 @@
 {
   "name": "dsh-bayern-boot",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A Bayern fan-made matchday boot sequence for DeepSeek Harness. Self-contained, offline client overlay.",
   "license": "MIT",
   "private": true,

@@ -1,18 +1,18 @@
 # 在另一台电脑安装拜仁启动插件
 
-版本：0.1.8。只迁移插件，不包含模型配置、API Key、会话或原电脑设置。
+版本：0.1.9。只迁移插件，不包含模型配置、API Key、会话或原电脑设置。
 
 ## Windows 桌面版
 
 1. 在目标电脑安装并正常运行一次 DeepSeek Harness，然后完整退出应用。
-2. 解压“01-其他电脑安装-v0.1.8.zip”。在包含 dsh-bayern-boot-0.1.8.tgz 的文件夹打开 PowerShell。
+2. 解压“01-其他电脑安装-v0.1.9.zip”。在包含 dsh-bayern-boot-0.1.9.tgz 的文件夹打开 PowerShell。
 3. 找到目标电脑的 DeepSeek Harness.exe，记下它所在的文件夹。执行：
 
 ```powershell
 $harnessFolder = Read-Host "请输入 DeepSeek Harness.exe 所在文件夹"
 $dsh = Join-Path $harnessFolder "resources\runtime\cli\bin\dsh.cmd"
 if (-not (Test-Path -LiteralPath $dsh)) { throw "未找到随附 CLI，请核对安装目录" }
-& $dsh plugin --profile desktop add ".\dsh-bayern-boot-0.1.8.tgz" --ignore-scripts
+& $dsh plugin --profile desktop add ".\dsh-bayern-boot-0.1.9.tgz" --ignore-scripts
 ```
 
 4. 安装成功后重新打开 DeepSeek Harness。动画播放 9 秒，停留 1 秒后自动进入。
@@ -20,7 +20,7 @@ if (-not (Test-Path -LiteralPath $dsh)) { throw "未找到随附 CLI，请核对
 如果 dsh 已在 PATH 中，可以直接使用：
 
 ```powershell
-dsh plugin --profile desktop add ".\dsh-bayern-boot-0.1.8.tgz" --ignore-scripts
+dsh plugin --profile desktop add ".\dsh-bayern-boot-0.1.9.tgz" --ignore-scripts
 ```
 
 这里的 desktop 是默认桌面 profile。若当前使用其他 profile，替换为实际名称；Web 版通常使用 web。不要把插件的 package.json 覆盖到用户的 profile 目录，安装命令会维护启用清单。
@@ -41,7 +41,7 @@ dsh plugin --profile desktop add "github:Li-junning/plugin-dsh" --ignore-scripts
 & $dsh plugin --profile desktop add "github:Li-junning/plugin-dsh" --ignore-scripts
 ```
 
-仓库创建 v0.1.8 标签后，可使用 `github:Li-junning/plugin-dsh#v0.1.8`。GitHub 安装拉取仓库内容；仅上传一个 ZIP 文件到仓库，不能代替仓库根目录的 package.json 和 lib/。如果只上传 tgz 到 GitHub Releases，先下载 tgz 再按本地方式安装。
+仓库创建 v0.1.9 标签后，可使用 `github:Li-junning/plugin-dsh#v0.1.9`。GitHub 安装拉取仓库内容；仅上传一个 ZIP 文件到仓库，不能代替仓库根目录的 package.json 和 lib/。如果只上传 tgz 到 GitHub Releases，先下载 tgz 再按本地方式安装。
 
 ## 卸载
 

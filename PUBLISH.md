@@ -3,7 +3,7 @@
 ## 第一次发布
 
 1. 目标仓库为 [Li-junning/plugin-dsh](https://github.com/Li-junning/plugin-dsh)。
-2. 解压“02-GitHub上传-v0.1.8.zip”，上传其中 dsh-bayern-boot 文件夹里的内容。package.json 应直接位于仓库根目录，不要在 GitHub 中再多套一层目录，也不要只上传 ZIP。
+2. 解压“02-GitHub上传-v0.1.9.zip”，上传其中 dsh-bayern-boot 文件夹里的内容。package.json 应直接位于仓库根目录，不要在 GitHub 中再多套一层目录，也不要只上传 ZIP。
 3. 一并上传 lib/client.js 和 lib/index.js。本版已构建，package.json 没有 prepare、install 或 postinstall 脚本，安装不需要重新编译。
 4. 提交完成后，可在其他电脑执行：
 
@@ -11,7 +11,7 @@
 dsh plugin --profile desktop add "github:Li-junning/plugin-dsh" --ignore-scripts
 ```
 
-5. 可选：创建 v0.1.8 标签及 Release，附上 dsh-bayern-boot-0.1.8.tgz。之后用户可以使用带 #v0.1.8 的 GitHub 地址固定版本，或下载 tgz 本地安装。
+5. 可选：创建 v0.1.9 标签及 Release，附上 dsh-bayern-boot-0.1.9.tgz。之后用户可以使用带 #v0.1.9 的 GitHub 地址固定版本，或下载 tgz 本地安装。
 
 无需先发布 npm 包。private: true 只用于防止误发布到 npm，不影响 GitHub 仓库与本地 tgz 分发。
 

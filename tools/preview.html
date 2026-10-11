@@ -7,12 +7,22 @@
 .controls{position:fixed;left:50%;bottom:13px;transform:translateX(-50%);z-index:10010;display:flex;align-items:center;gap:7px;max-width:calc(100vw - 40px);background:#171920f2;border:1px solid #ffffff20;padding:7px 10px;border-radius:8px;box-shadow:0 8px 30px #0007;white-space:nowrap}
 .controls button,.controls select{font:11px "Segoe UI","Microsoft YaHei",sans-serif;background:#242630;color:#d4d1d7;border:1px solid #ffffff15;border-radius:4px;padding:6px 9px;cursor:pointer}.controls button:hover{background:#3b2630}.controls button[aria-pressed=true]{background:#5a1729;border-color:#a91b3d}.controls .preview-label{font:9px Consolas,monospace;letter-spacing:.12em;color:#787d8b;margin-right:4px}.controls output{font:10px Consolas,monospace;color:#999fac;min-width:31px}button:focus-visible,select:focus-visible{outline:2px solid #fafafa;outline-offset:3px}
 @media(max-width:600px){.controls{gap:4px;padding:6px;bottom:8px}.controls .preview-label{display:none}.controls button,.controls select{font-size:10px;padding:6px}.controls output{display:none}.host h1{font-size:26px}}
+
+@media(prefers-color-scheme:light){html{--preview-bg:#f6f4f0;--preview-fg:#352d34;--preview-muted:#6f626b;--preview-controls:#fffdf7f2;--preview-button:#f1eae5;--preview-border:#9c173a26;--preview-focus:#951638;--preview-hover:#f4dce2;--native-bg:#fafafa;--native-fg:#242428;--native-track:#24242825;}}
+html,body{background:var(--preview-bg,#101116);color:var(--preview-fg,#f0edef)}
+.host p,.host small,.controls output,.controls .preview-label{color:var(--preview-muted,#8e919d)}
+.controls{background:var(--preview-controls,#171920f2);border-color:var(--preview-border,#ffffff20);box-shadow:0 8px 30px #0002;flex-wrap:wrap;justify-content:center}
+.controls button,.controls select{background:var(--preview-button,#242630);color:var(--preview-fg,#d4d1d7);border-color:var(--preview-border,#ffffff15)}
+.controls button:hover{background:var(--preview-hover,#3b2630)}
+.controls button[aria-pressed=true]{background:#dc052d;color:white;border-color:#dc052d}
+button:focus-visible,select:focus-visible{outline-color:var(--preview-focus,#fafafa)}
+
 html[data-clean] .controls{display:none}
 </style></head><body>
 <div class="host"><div class="eyebrow">MIA SAN MIA / PREVIEW</div><h1>欢迎回到主场。</h1><p>拜仁主题启动插件 · 本地体验预览<br>正式安装后，这一步将显示你的 DeepSeek Harness 界面。</p><button id="host-replay">再次播放开场 ↗</button><small>9 秒开场 · 停留 1 秒后自动进入 · Esc 跳过</small></div>
 <div id="overlay-host"></div>
 <nav class="controls" aria-label="预览播放控制">
-<span class="preview-label">PREVIEW · v0.1.8</span><button id="replay">重播</button><button id="pause" aria-pressed="false">暂停</button>
+<span class="preview-label">PREVIEW · v0.1.9</span><button id="replay">重播</button><button id="pause" aria-pressed="false">暂停</button>
 <select id="scene" aria-label="跳转到动画阶段"><option value="">实时播放</option><option value="1.5">01 点亮主场</option><option value="3.8">02 队徽入场</option><option value="9">03 主场就绪</option></select>
 <button id="reduced" aria-pressed="false">缩减动画</button><output id="time">00.0</output>
 </nav>
@@ -24,7 +34,7 @@ window.__ModuleLoader__ = {load({factory}) {
   return {createElement(type,props) {return {type,props:props || {}};}};
  });
 }};
-</script><script src="../lib/client.js?v=0.1.8"></script><script>
+</script><script src="../lib/client.js?v=0.1.9"></script><script>
 const query = new URLSearchParams(location.search);
 if (query.has("clean")) document.documentElement.dataset.clean = "";
 let paused = false, reduced = query.has("reduced"), frozen = false, elapsed = 0, base = performance.now();
@@ -54,7 +64,7 @@ function tickTimers(now) {
 let loadingFixture = null, initialMountTimer = null;
 if (query.has("handoff")) {
  const css=document.createElement("style");
- css.textContent='.native-boot{position:fixed;inset:0;display:grid;place-items:center;background:#141414;color:#f9fafb;font:16px Arial,sans-serif;z-index:100}.native-card{display:flex;flex-direction:column;align-items:center;gap:16px}.native-wordmark{font-size:16px;line-height:24px;font-weight:600;letter-spacing:.08em}.native-spinner{width:20px;height:20px;border:2px solid #ffffff25;border-top-color:#f9fafb;border-right-color:#f9fafb;border-radius:50%;animation:native-spin .8s linear infinite}.native-hint{font-size:12px;line-height:18px;color:#adb2b8}@keyframes native-spin{to{transform:rotate(360deg)}}';
+ css.textContent='.native-boot{position:fixed;inset:0;display:grid;place-items:center;background:var(--native-bg,#141414);color:var(--native-fg,#f9fafb);font:16px Arial,sans-serif;z-index:100}.native-card{display:flex;flex-direction:column;align-items:center;gap:16px}.native-wordmark{font-size:16px;line-height:24px;font-weight:600;letter-spacing:.08em}.native-spinner{width:20px;height:20px;border:2px solid var(--native-track,#ffffff25);border-top-color:var(--native-fg,#f9fafb);border-right-color:var(--native-fg,#f9fafb);border-radius:50%;animation:native-spin .8s linear infinite}.native-hint{font-size:12px;line-height:18px;color:#adb2b8}@keyframes native-spin{to{transform:rotate(360deg)}}';
  document.head.append(css);
  loadingFixture=document.createElement("div");loadingFixture.className="native-boot";loadingFixture.setAttribute("data-dsh-boot","");
  loadingFixture.innerHTML='<div class="native-card"><div class="native-wordmark">HARNESS</div><div class="native-spinner" data-dsh-boot-spinner></div><div class="native-hint">Loading plugins...</div></div>';

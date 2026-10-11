@@ -52,13 +52,14 @@ function stadium() {
           const tint=[Math.round(83+135*light),Math.round(6+32*light),Math.round(23+39*light)];
           const roof=Math.max(0,Math.min(1,(.38-v)/.13));
           const membrane=[105+75*light,111+74*light,120+72*light];
-          const material=tint.map((c,k)=>Math.round(c+(membrane[k]-c)*roof));
-          cells.push({depth,d:cushion(vertices),color:"rgb("+tint.join(",")+")",membrane:"rgb("+membrane.map(Math.round).join(",")+")",shine:(.25+light*.4).toFixed(2)});
+          const daylight=[Math.round(158+65*light),Math.round(32+37*light),Math.round(57+44*light)];
+          const dayRoof=[Math.round(188+49*light),Math.round(195+44*light),Math.round(202+38*light)];
+          cells.push({depth,d:cushion(vertices),color:"rgb("+tint.join(",")+")",membrane:"rgb("+membrane.map(Math.round).join(",")+")",day:"rgb("+daylight.join(",")+")",dayRoof:"rgb("+dayRoof.join(",")+")",shine:(.25+light*.4).toFixed(2)});
         }
       }
       cells.sort((a,b)=>a.depth-b.depth);
-      const shell=cells.map(c=>'<g><path class="bb-cushion bb-facade-cushion" d="'+c.d+'" fill="'+c.color+'"/><path d="'+c.d+'" fill="url(#bb-pillow)" opacity="'+c.shine+'"/></g>').join("");
-      const roofShell=cells.map(c=>'<g><path class="bb-cushion bb-roof-cushion" d="'+c.d+'" fill="'+c.membrane+'"/><path d="'+c.d+'" fill="url(#bb-roof-pillow)" opacity="'+c.shine+'"/></g>').join("");
+      const shell=cells.map(c=>'<g><path class="bb-cushion bb-facade-cushion" d="'+c.d+'" fill="'+c.color+'" style="--bb-night-facade:'+c.color+';--bb-day-facade:'+c.day+'"/><path d="'+c.d+'" fill="url(#bb-pillow)" opacity="'+c.shine+'"/></g>').join("");
+      const roofShell=cells.map(c=>'<g><path class="bb-cushion bb-roof-cushion" d="'+c.d+'" fill="'+c.membrane+'" style="--bb-night-roof:'+c.membrane+';--bb-day-roof:'+c.dayRoof+'"/><path d="'+c.d+'" fill="url(#bb-roof-pillow)" opacity="'+c.shine+'"/></g>').join("");
       const cloud=[];
       for(let j=0;j<=36;j++)for(let i=0;i<160;i++)cloud.push(project(surface(i*TAU/160,j/36)));
       cloud.sort((a,b)=>a[0]-b[0]||a[1]-b[1]);
@@ -74,18 +75,18 @@ function stadium() {
         const [a,b]=tiers[tier];
         for(let row=0;row<8;row++) {
           const p=mix(a,b,row/7);
-          seats+='<path d="'+outline(...p,.57)+'" fill="none" stroke="'+(row===0?"#d26a76":"#a72442")+'" stroke-width="'+(row===0?"1.6":"1.15")+'" stroke-dasharray="'+(row===0?"none":"1.4 2.9")+'" opacity="'+(row===0?".7":".63")+'"/>';
+          seats+='<path d="'+outline(...p,.57)+'" fill="none" stroke="'+(row===0?"var(--bb-seat-rim)":"var(--bb-seat)")+'" stroke-width="'+(row===0?"1.6":"1.15")+'" stroke-dasharray="'+(row===0?"none":"1.4 2.9")+'" opacity="'+(row===0?".7":".63")+'"/>';
         }
         for(let i=0;i<36;i++) {
           const u=i*TAU/36;
           const p=project([a[0]*signed(Math.cos(u),.57),a[1]*signed(Math.sin(u),.57),a[2]]);
           const q=project([b[0]*signed(Math.cos(u),.57),b[1]*signed(Math.sin(u),.57),b[2]]);
-          aisles+='<path d="M'+pt(p)+" L"+pt(q)+'" stroke="#080a0e" stroke-width="3"/>';
+          aisles+='<path d="M'+pt(p)+" L"+pt(q)+'" stroke="var(--bb-aisle)" stroke-width="3"/>';
         }
       }
       const floor=z=>project([z[0],z[1],-30]);
       const rectangle=(x,y,w,h)=>polygon([[x,y],[x+w,y],[x+w,y+h],[x,y+h]].map(floor));
-      for(let i=0;i<14;i++)stripes+='<path d="'+rectangle(-208+i*416/14,-132,416/14,264)+'" fill="'+(i%2?"#16362e":"#102d27")+'"/>';
+      for(let i=0;i<14;i++)stripes+='<path d="'+rectangle(-208+i*416/14,-132,416/14,264)+'" fill="'+(i%2?"var(--bb-grass-a)":"var(--bb-grass-b)")+'"/>';
       fieldLines+='<path d="'+rectangle(-202,-126,404,252)+'"/><path d="M'+pt(floor([0,-126]))+" L"+pt(floor([0,126]))+'"/>';
       fieldLines+='<path d="'+rectangle(-202,-58,64,116)+'"/><path d="'+rectangle(138,-58,64,116)+'"/>';
       fieldLines+='<path d="'+rectangle(-202,-27,26,54)+'"/><path d="'+rectangle(176,-27,26,54)+'"/>';
@@ -106,13 +107,13 @@ function stadium() {
         '<radialGradient id="bb-ground"><stop stop-color="#dc052d" stop-opacity=".24"/><stop offset=".58" stop-color="#8f0b27" stop-opacity=".08"/><stop offset="1" stop-color="#08090c" stop-opacity="0"/></radialGradient>'+
         '<radialGradient id="bb-pillow" cx=".43" cy=".33" r=".72"><stop stop-color="#ffd3d1" stop-opacity=".74"/><stop offset=".5" stop-color="#ff7187" stop-opacity=".32"/><stop offset="1" stop-color="#330413" stop-opacity=".38"/></radialGradient>'+
         '<radialGradient id="bb-roof-pillow" cx=".43" cy=".34" r=".72"><stop stop-color="#ffffff" stop-opacity=".45"/><stop offset=".52" stop-color="#cbd4df" stop-opacity=".08"/><stop offset="1" stop-color="#161e2d" stop-opacity=".3"/></radialGradient>'+
-        '<radialGradient id="bb-bowl"><stop stop-color="#12221f"/><stop offset=".65" stop-color="#0b1015"/><stop offset="1" stop-color="#04070b"/></radialGradient>'+
+        '<radialGradient id="bb-bowl"><stop stop-color="var(--bb-bowl-center)"/><stop offset=".65" stop-color="var(--bb-bowl-mid)"/><stop offset="1" stop-color="var(--bb-bowl-edge)"/></radialGradient>'+
         '<linearGradient id="bb-front-shade" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07090d" stop-opacity="0"/><stop offset=".7" stop-color="#07090d" stop-opacity="0"/><stop offset="1" stop-color="#07090d" stop-opacity=".55"/></linearGradient>'+
         '<filter id="bb-arena-shadow" x="-20%" y="-30%" width="140%" height="180%"><feGaussianBlur stdDeviation="10"/></filter>'+
         '<filter id="bb-led-glow" x="-15%" y="-30%" width="130%" height="160%"><feGaussianBlur stdDeviation="2"/></filter>'+
         '<clipPath id="bb-opening-clip"><path d="'+opening+'"/></clipPath><clipPath id="bb-roof-zone"><path d="'+roofBoundary+'"/></clipPath></defs>'+
         '<ellipse cx="600" cy="488" rx="547" ry="128" fill="url(#bb-ground)"/>'+
-        '<path d="'+outline(494,405,-10)+'" fill="#000" opacity=".55" filter="url(#bb-arena-shadow)"/>'+
+        '<path d="'+outline(494,405,-10)+'" fill="var(--bb-arena-shadow)" opacity="var(--bb-arena-shadow-opacity)" filter="url(#bb-arena-shadow)"/>'+
         '<g fill="none" stroke="#7b4d56" stroke-width=".7" opacity=".19"><path d="'+outline(509,420,-13)+'"/><path d="'+outline(524,435,-13)+'"/></g>'+
         '<path d="'+body+'" fill="#a4213c"/><g clip-path="url(#bb-opening-clip)" class="bb-arena-interior"><path d="'+opening+'" fill="url(#bb-bowl)"/>'+
         stripes+'<g fill="none" stroke="#cadbd0" stroke-width="1" opacity=".44">'+fieldLines+'</g>'+seats+aisles+'</g>'+
