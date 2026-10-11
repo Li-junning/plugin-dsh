@@ -1,0 +1,53 @@
+{
+  "name": "dsh-bayern-boot",
+  "version": "0.1.8",
+  "description": "A Bayern fan-made matchday boot sequence for DeepSeek Harness. Self-contained, offline client overlay.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "INSTALL.md",
+    "LICENSE",
+    "NOTICE.md",
+    "references/550w-LICENSE.txt",
+    "PUBLISH.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/verify.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "bayern",
+    "boot-sequence"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Li-junning/plugin-dsh.git"
+  },
+  "homepage": "https://github.com/Li-junning/plugin-dsh#readme",
+  "bugs": {
+    "url": "https://github.com/Li-junning/plugin-dsh/issues"
+  }
+}
